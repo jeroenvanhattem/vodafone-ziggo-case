@@ -1,0 +1,3 @@
+interface CreateQuoteDto {
+  id: number;
+}
