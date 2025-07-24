@@ -1,17 +1,17 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Controller, Get, Param } from '@nestjs/common';
 import { QuotesService } from './quotes.service';
 
 @Controller('quotes')
 export class QuotesController {
   constructor(private readonly quotesService: QuotesService) {}
 
-  @Get()
-  getLikedQuotes() {
-    return this.quotesService.getLikedQuotes();
+  @Get('/random')
+  getRandomQuote() {
+    return this.quotesService.getRandomQuote();
   }
 
-  @Post()
-  create(@Body() createQuoteDto: CreateQuoteDto) {
-    return this.quotesService.createLikedQuote(createQuoteDto);
+  @Get('/search/:query')
+  search(@Param('query') query: string) {
+    return this.quotesService.searchQuote(query);
   }
 }

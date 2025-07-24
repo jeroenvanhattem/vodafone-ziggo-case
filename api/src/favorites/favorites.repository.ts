@@ -3,7 +3,7 @@ import { FavqService } from 'src/favq/favq.service';
 import { PrismaService } from 'src/prisma/prisma.service';
 
 @Injectable()
-export class QuotesRepository {
+export class FavoritesRepository {
   constructor(
     private readonly prismaService: PrismaService,
     private readonly favqService: FavqService,
@@ -30,6 +30,14 @@ export class QuotesRepository {
     return this.prismaService.likedQuotes.create({
       data: {
         quoteId: quote.id,
+      },
+    });
+  }
+
+  async deleteLikedQuote(id: number) {
+    return this.prismaService.likedQuotes.delete({
+      where: {
+        id,
       },
     });
   }

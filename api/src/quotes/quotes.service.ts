@@ -1,15 +1,15 @@
 import { Injectable } from '@nestjs/common';
-import { QuotesRepository } from './quotes.repository';
+import { FavqService } from 'src/favq/favq.service';
 
 @Injectable()
 export class QuotesService {
-  constructor(private readonly quotesRepository: QuotesRepository) {}
+  constructor(private readonly favqService: FavqService) {}
 
-  getLikedQuotes() {
-    return this.quotesRepository.findAllLikedQuotes();
+  searchQuote(query: string) {
+    return this.favqService.searchQuote(query);
   }
 
-  createLikedQuote(quote: CreateQuoteDto) {
-    return this.quotesRepository.createLikedQuote(quote);
+  getRandomQuote() {
+    return this.favqService.getRandomQuote();
   }
 }

@@ -21,7 +21,7 @@ model knex_migrations_lock {
 
 model likedQuotes {
   id        Int       @id @default(autoincrement())
-  quoteId   Int       @map("quote_id")
+  quoteId   Int       @unique(map: "liked_quotes_quote_id_unique") @map("quote_id")
   createdAt DateTime? @default(now()) @map("created_at") @db.Timestamptz(6)
   updatedAt DateTime? @default(now()) @map("updated_at") @db.Timestamptz(6)
 
