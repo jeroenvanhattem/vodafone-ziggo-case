@@ -4,26 +4,10 @@ import { PrismaService } from 'src/prisma/prisma.service';
 
 @Injectable()
 export class FavoritesRepository {
-  constructor(
-    private readonly prismaService: PrismaService,
-    private readonly favqService: FavqService,
-  ) {}
+  constructor(private readonly prismaService: PrismaService) {}
 
   async findAllLikedQuotes() {
-    const likedQuotes = await this.prismaService.likedQuotes.findMany();
-
-    if (likedQuotes.length === 0) {
-      return [];
-    }
-
-    const quotes = await Promise.all(
-      likedQuotes.map(async (quote) => {
-        const favqQuote = await this.favqService.getQuote(quote.quoteId);
-        return favqQuote;
-      }),
-    );
-
-    return quotes;
+    return this.prismaService.likedQuotes.findMany();
   }
 
   async createLikedQuote(quote: CreateQuoteDto) {
@@ -40,5 +24,17 @@ export class FavoritesRepository {
         id,
       },
     });
+  }
+
+  async findQuoteById(id: number) {
+    const likedQuote = await this.prismaService.likedQuotes.findFirst({
+      where: { quoteId: id },
+    });
+
+    if (!likedQuote) {
+      return null;
+    }
+
+    return likedQuote;
   }
 }

@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import { FavoritesService } from 'src/favorites/favorites.service';
 import { FavqService } from 'src/favq/favq.service';
 
 @Injectable()

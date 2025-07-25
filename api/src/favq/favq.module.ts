@@ -1,6 +1,8 @@
 import { HttpModule } from '@nestjs/axios';
 import { FavqService } from './favq.service';
-import { Global, Module } from '@nestjs/common';
+import { forwardRef, Global, Module } from '@nestjs/common';
+import { FavoritesService } from 'src/favorites/favorites.service';
+import { FavoritesModule } from 'src/favorites/favorites.module';
 
 @Global()
 @Module({
@@ -11,6 +13,7 @@ import { Global, Module } from '@nestjs/common';
         Authorization: `Token ${process.env.FAVQS_API_KEY}`,
       },
     }),
+    forwardRef(() => FavoritesModule),
   ],
   providers: [FavqService],
   exports: [FavqService],

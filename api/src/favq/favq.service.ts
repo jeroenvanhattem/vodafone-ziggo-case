@@ -1,12 +1,14 @@
-/* eslint-disable @typescript-eslint/no-unsafe-return */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { HttpService } from '@nestjs/axios';
 import { Injectable } from '@nestjs/common';
 import { firstValueFrom } from 'rxjs';
+import { FavoritesService } from 'src/favorites/favorites.service';
 
 @Injectable()
 export class FavqService {
-  constructor(private readonly http: HttpService) {}
+  constructor(
+    private readonly http: HttpService,
+    private readonly favoritesService: FavoritesService,
+  ) {}
 
   async getQuote(id: number) {
     const { data } = await firstValueFrom(this.http.get(`/quotes/${id}`));
@@ -29,15 +31,25 @@ export class FavqService {
   }
 
   async searchQuote(query: string) {
-    console.log('Searching for quote:', query);
     const { data } = await firstValueFrom(
       this.http.get(`/quotes/?filter=${query}`),
     );
 
     if (!data || !data.quotes) {
-      throw new Error('No quotes found');
+      return null;
     }
 
-    return data.quotes;
+    if (data.quotes.length === 1 && data.quotes[0].id === 0) {
+      return [];
+    }
+
+    const quotes = await Promise.all(
+      data.quotes.map(async (quote: { id: number }) => {
+        const liked = await this.favoritesService.findQuoteById(quote.id);
+        return { ...quote, isFavorite: !!liked, internalId: liked?.id };
+      }),
+    );
+
+    return quotes;
   }
 }
