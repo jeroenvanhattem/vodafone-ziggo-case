@@ -45,6 +45,10 @@ export const Quote = ({ quote }: Props) => {
     }
   };
 
+  if (!quote) {
+    return null;
+  }
+
   return (
     <Card>
       <View style={styles.content}>
