@@ -5,9 +5,5 @@ interface EmptyProps {
 }
 
 export const Empty = ({ query }: EmptyProps) => {
-  return (
-    <Typography variant="body">
-      There's no quotes found for "{query}"
-    </Typography>
-  );
+  return <Typography variant="body">No quotes found for "{query}"</Typography>;
 };

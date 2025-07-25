@@ -11,7 +11,7 @@ A couple of steps before being able to run the project.
 
 Then, to run it. Start the backend by running `docker compose up -d` and `bun run start:dev`. Then for the front end you run both `bun start` and `bun ios`.
 
-In terms of testing, you can run the Jest tests with `bun run test`
+In terms of testing, you can run the Jest tests with `bun run test` in the `/app` folder
 
 ## What did I implement
 
@@ -27,12 +27,14 @@ You can like and unlike quotes.
 
 In the backend we have a Nestjs server. It is accompanied by a PostgreSQL database which stores the liked quotes. I use Knex for making a migration to incrementally build the database and Prisma as ORM to interact with the database. There are seperate controllers for the `/quotes` and `/favorites` endpoints. `Favorites` also has a repository to talk to the database. The `favq` module is used to talk to the favq API.
 
+I added all tests in the frontend. The QuoteFlowApi tests use the backend functionality with a mocked quote.
+
 ## How would I improve this if I had more time
 
 If it'd be a bigger project with more time and resources, I'd make a couple of adjustments.
 
 1. I'd add `swagger` to the backend to create OpenAPI documentation. Then using `orval`, I'd generate the React hooks. Significant overkill for now, but it'd be nice to auto generate.
-2. Make the database persistent. Now it doesn't have a volume attached in the Docker container.
+2. Add some eslint and prettier rules. I disabled them for now. I'd also add a sorting order prettier rule that autosorts all the imports.
 3. Make some pretty animations. It's currently all very abrupt.
 4. Make a pretty component for the flatlist that already contains the scroll to top button and logic instead of having to reuse it.
 5. Add pagination to the search. It currently shows 25 results. Could apply the same logic as on the home page with the infinite scroll.

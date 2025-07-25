@@ -25,6 +25,7 @@ export const Search = () => {
     <SafeAreaView style={styles.container}>
       <Typography variant="h1">Search</Typography>
       <SearchInput onSearch={setQuery} />
+
       {isPending && query !== '' ? (
         <Loading />
       ) : (
@@ -38,6 +39,7 @@ export const Search = () => {
           onScroll={handleScroll}
         />
       )}
+
       {data ? <ScrollToTop listRef={ref} isVisible={isVisible} /> : null}
     </SafeAreaView>
   );

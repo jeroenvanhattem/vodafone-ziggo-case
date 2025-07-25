@@ -6,7 +6,7 @@ import { FavqService } from 'src/favq/favq.service';
 export class FavoritesService {
   constructor(
     private readonly favoritesRepository: FavoritesRepository,
-    @Inject(forwardRef(() => FavqService)) // Circular dependency handling
+    @Inject(forwardRef(() => FavqService))
     private readonly favqService: FavqService,
   ) {}
 

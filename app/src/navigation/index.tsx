@@ -27,6 +27,7 @@ export function navigate(name: any, params?: any) {
 
 export const Navigation = () => {
   const { colors } = useTheme();
+
   const getIcon = (name: string, focused: boolean) => {
     const icons = {
       Home: <HomeIcon color={focused ? colors[100] : colors[300]} />,
@@ -51,8 +52,6 @@ export const Navigation = () => {
             tabBarShowLabel: false,
             tabBarStyle: {
               backgroundColor: colors[800],
-              // borderTopWidth: 0,
-              // height: 60,
             },
           };
         }}

@@ -34,6 +34,7 @@ export const HomeHeader = () => {
           )}
         </Pressable>
       </View>
+
       <Typography variant="title">Quote of the day</Typography>
       <Quote quote={data as QuoteType} />
 

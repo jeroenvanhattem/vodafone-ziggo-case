@@ -33,10 +33,5 @@ export const COLORS = {
   },
   functional: {
     love: '#FF6B6B',
-    dislike: '#6C757D',
-    success: '#28A745',
-    warning: '#FFC107',
-    error: '#DC3545',
-    info: '#17A2B8',
   },
 };
