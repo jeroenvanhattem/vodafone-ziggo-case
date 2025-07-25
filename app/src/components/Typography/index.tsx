@@ -7,13 +7,18 @@ interface Props {
   variant: 'h1' | 'body' | 'title' | 'subtitle' | 'caption';
   children: ReactNode;
   color?: string;
+  testID?: string;
 }
 
-export const Typography = ({ variant, children, color }: Props) => {
+export const Typography = ({ variant, children, color, testID }: Props) => {
   const { colors } = useTheme();
   const styles = makeStyles(colors);
 
-  return <Text style={[styles[variant], color && { color }]}>{children}</Text>;
+  return (
+    <Text style={[styles[variant], color && { color }]} testID={testID}>
+      {children}
+    </Text>
+  );
 };
 
 const makeStyles = (colors: ColorsType) => ({

@@ -7,6 +7,27 @@ Fill in the .env in `/api` with your own QOTF API key.
 
 Start the backend by running `docker compose up -d` and `bun run start:dev`. Then for the front end you run both `bun start` and `bun ios`.
 
+There are 2 kind of frontend tests. One is E2E using Detox, other one is Jest for logic.
+
+1. Run the E2E with these commands
+
+- `detox build --configuration ios.sim.debug` to build the project.
+- `detox test --configuration ios.sim.debug` to run the E2E test.
+
+2. Run the Jest tests with `bun run test`
+
+## What did I implement
+
+I created a quotes app using React Native in the frontend and Nestjs in the backend.
+
+In the frontend, we have 3 screens. Home, favorites and search.
+
+- Home shows a random quote with underneath an infinitely scrollable list of quotes. On top there's a switch to change themes.
+- Favorites shows all your liked quotes, sorted on most recent.
+- Search has a search input that searches with a small bounce time to not spam search calls. Then there's a list of quotes.
+
+In the backend we have a Nestjs server. It is accompanied by a PostgreSQL database which stores the liked quotes. I use Knex for making a migration to incrementally build the database and Prisma as ORM to interact with the database. There are seperate controllers for the `/quotes` and `/favorites` endpoints. `Favorites` also has a repository to talk to the database. The `favq` module is used to talk to the favq API.
+
 ## How would I improve this if I had more time
 
 If it'd be a bigger project, I'd make a couple of adjustments.
@@ -15,6 +36,12 @@ If it'd be a bigger project, I'd make a couple of adjustments.
 2. Make the database persistent. Now it doesn't have a volume attached in the Docker container.
 3. Make some pretty animations. It's currently all very abrupt.
 4. Make a pretty component for the flatlist that already contains the scroll to top button and logic instead of having to reuse it.
+5. Add pagination to the search. It currently shows 25 results. Could apply the same logic as on the home page with the infinite scroll.
+6. Create a better feedback system then just redirecting the user to the `Favorites` page. Probably something like toasts or animating the heart icon to glow up.
+7. Make a prettier design. Probably with some accents colors. Something that is actually thought out. It's all very, very basic at the moment.
+8. Add a splash screen and an icon.
+9. Change the app name. It's currently the default React Native name.
+10. Add Detox to have E2E tests
 
 ## A few choices explained
 

@@ -10,4 +10,6 @@ export const MockQuote = {
   author: 'Adina',
   author_permalink: 'adina',
   body: 'This is my quote for performance testing',
+  internalId: undefined,
+  isFavorite: false,
 };

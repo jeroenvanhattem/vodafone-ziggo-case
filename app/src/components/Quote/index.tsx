@@ -48,8 +48,12 @@ export const Quote = ({ quote }: Props) => {
   return (
     <Card>
       <View style={styles.content}>
-        <Typography variant="body">{formatText(quote.body)}</Typography>
-        <Typography variant="caption">{quote.author}</Typography>
+        <Typography variant="body" testID="quote-body">
+          {formatText(quote.body)}
+        </Typography>
+        <Typography variant="caption" testID="quote-author">
+          {quote.author}
+        </Typography>
       </View>
 
       <View style={styles.actions}>

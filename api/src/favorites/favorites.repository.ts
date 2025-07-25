@@ -7,7 +7,11 @@ export class FavoritesRepository {
   constructor(private readonly prismaService: PrismaService) {}
 
   async findAllLikedQuotes() {
-    return this.prismaService.likedQuotes.findMany();
+    return this.prismaService.likedQuotes.findMany({
+      orderBy: {
+        createdAt: 'desc',
+      },
+    });
   }
 
   async createLikedQuote(quote: CreateQuoteDto) {
