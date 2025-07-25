@@ -2,19 +2,16 @@
 
 ## How to run
 
-Make sure you have [bun](https://bun.sh) installed, as I use this as node environment. Install the packages using `bun install` in both `/app` and `/api`. Also install the iOS pods (if running on iPhone) with `bun pod` in `/app`.
-Fill in the .env in `/api` with your own QOTF API key.
+A couple of steps before being able to run the project.
 
-Start the backend by running `docker compose up -d` and `bun run start:dev`. Then for the front end you run both `bun start` and `bun ios`.
+1. Make sure you have [bun](https://bun.sh) installed, as I use this as node environment.
+2. Install the packages using `bun install` in both `/app` and `/api`. Also install the iOS pods (if running on iPhone) with `bun pod` in `/app`.
+3. Install the [NestJS CLI](https://docs.nestjs.com/cli/overview)
+4. Fill in the .env in `/api` with your own FavQs API key.
 
-There are 2 kind of frontend tests. One is E2E using Detox, other one is Jest for logic.
+Then, to run it. Start the backend by running `docker compose up -d` and `bun run start:dev`. Then for the front end you run both `bun start` and `bun ios`.
 
-1. Run the E2E with these commands
-
-- `detox build --configuration ios.sim.debug` to build the project.
-- `detox test --configuration ios.sim.debug` to run the E2E test.
-
-2. Run the Jest tests with `bun run test`
+In terms of testing, you can run the Jest tests with `bun run test`
 
 ## What did I implement
 
@@ -26,11 +23,13 @@ In the frontend, we have 3 screens. Home, favorites and search.
 - Favorites shows all your liked quotes, sorted on most recent.
 - Search has a search input that searches with a small bounce time to not spam search calls. Then there's a list of quotes.
 
+You can like and unlike quotes.
+
 In the backend we have a Nestjs server. It is accompanied by a PostgreSQL database which stores the liked quotes. I use Knex for making a migration to incrementally build the database and Prisma as ORM to interact with the database. There are seperate controllers for the `/quotes` and `/favorites` endpoints. `Favorites` also has a repository to talk to the database. The `favq` module is used to talk to the favq API.
 
 ## How would I improve this if I had more time
 
-If it'd be a bigger project, I'd make a couple of adjustments.
+If it'd be a bigger project with more time and resources, I'd make a couple of adjustments.
 
 1. I'd add `swagger` to the backend to create OpenAPI documentation. Then using `orval`, I'd generate the React hooks. Significant overkill for now, but it'd be nice to auto generate.
 2. Make the database persistent. Now it doesn't have a volume attached in the Docker container.
