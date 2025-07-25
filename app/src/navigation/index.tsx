@@ -49,6 +49,11 @@ export const Navigation = () => {
               return getIcon(route.name, focused);
             },
             tabBarShowLabel: false,
+            tabBarStyle: {
+              backgroundColor: colors[800],
+              // borderTopWidth: 0,
+              // height: 60,
+            },
           };
         }}
       >

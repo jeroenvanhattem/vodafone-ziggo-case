@@ -4,7 +4,7 @@ import { ReactNode } from 'react';
 import { Text } from 'react-native';
 
 interface Props {
-  variant: 'body' | 'h1' | 'subtitle' | 'caption';
+  variant: 'h1' | 'body' | 'title' | 'subtitle' | 'caption';
   children: ReactNode;
   color?: string;
 }
@@ -32,6 +32,11 @@ const makeStyles = (colors: ColorsType) => ({
   },
   caption: {
     fontSize: 12,
-    color: colors[400],
+    color: colors[300],
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    color: colors[100],
   },
 });

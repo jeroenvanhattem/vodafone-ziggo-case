@@ -10,12 +10,14 @@ interface Props {
 export const Card = ({ children }: Props) => {
   const { colors } = useTheme();
   const styles = makeStyles(colors);
+
   return <View style={styles.container}>{children}</View>;
 };
 
 const makeStyles = (colors: ColorsType) =>
   StyleSheet.create({
     container: {
+      margin: 4,
       display: 'flex',
       padding: 16,
       backgroundColor: colors[800],

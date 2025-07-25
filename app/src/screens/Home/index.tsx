@@ -3,32 +3,77 @@ import { useQuotes } from '@/hooks/Quotes';
 import { Loading } from '@/components/Loading';
 import { Quote } from '@/components/Quote';
 import { QuoteType } from '@/types';
-import { StyleSheet } from 'react-native';
+import { FlatList, StyleSheet, View } from 'react-native';
 import { Typography } from '@/components/Typography';
+import { useTheme } from '@/providers/theme';
+import { ColorsType } from '@/providers/theme/colors';
+import { useMemo } from 'react';
+import { HomeHeader } from './HomeHeader';
+import { ScrollToTop } from '@/components/ScrollToTop';
+import { useScroll } from '@/hooks/Utils';
 
 export const Home = () => {
-  const { data, isPending } = useQuotes();
+  const { colors } = useTheme();
+  const styles = makeStyles(colors);
+  const { ref, isVisible, handleScroll } = useScroll();
 
-  if (!data && isPending) {
-    return <Loading />;
-  }
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } =
+    useQuotes({ page: 1 });
 
-  if (!data) {
-    return null;
+  const quotes = useMemo(() => {
+    return data?.pages.flatMap((page: unknown) => page as QuoteType[]) ?? [];
+  }, [data]);
+
+  if (!data && isLoading) {
+    return (
+      <SafeAreaView style={styles.container}>
+        <Loading />
+      </SafeAreaView>
+    );
   }
 
   return (
     <SafeAreaView style={styles.container}>
-      <Typography variant="h1">Today's quote</Typography>
-      <Quote quote={data as QuoteType} />
+      <View style={styles.content}>
+        <FlatList
+          ref={ref}
+          data={quotes}
+          renderItem={({ item }) => <Quote quote={item} />}
+          keyExtractor={(item, index) => `${item.id.toString()}-${index}`}
+          contentContainerStyle={styles.flatlistContent}
+          showsVerticalScrollIndicator={false}
+          onEndReached={() => {
+            if (hasNextPage && !isFetchingNextPage) fetchNextPage();
+          }}
+          onEndReachedThreshold={0.5}
+          onScroll={handleScroll}
+          ListHeaderComponent={<HomeHeader />}
+          ListEmptyComponent={
+            <Typography variant="body">No quotes available</Typography>
+          }
+        />
+      </View>
+
+      <ScrollToTop listRef={ref} isVisible={isVisible} />
     </SafeAreaView>
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    paddingHorizontal: 32,
-    gap: 16,
-  },
-});
+const makeStyles = (colors: ColorsType) =>
+  StyleSheet.create({
+    container: {
+      flex: 1,
+      paddingHorizontal: 32,
+      gap: 16,
+      backgroundColor: colors[900],
+      justifyContent: 'space-between',
+    },
+    content: {
+      flexGrow: 1,
+      gap: 16,
+    },
+    flatlistContent: {
+      gap: 16,
+      paddingBottom: 32,
+    },
+  });

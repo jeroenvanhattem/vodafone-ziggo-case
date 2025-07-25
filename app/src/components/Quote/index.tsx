@@ -36,7 +36,7 @@ export const Quote = ({ quote }: Props) => {
         { id: quote.id },
         {
           onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ['quotes'] });
+            queryClient.invalidateQueries({ queryKey: ['randomQuote'] });
             queryClient.invalidateQueries({ queryKey: ['favoriteQuotes'] });
             navigate('Favorites');
           },
@@ -51,6 +51,7 @@ export const Quote = ({ quote }: Props) => {
         <Typography variant="body">{formatText(quote.body)}</Typography>
         <Typography variant="caption">{quote.author}</Typography>
       </View>
+
       <View style={styles.actions}>
         <Pressable onPress={handlePress}>
           <Heart
@@ -74,7 +75,7 @@ const styles = StyleSheet.create({
   },
   actions: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: 'center',
     width: '100%',
     paddingHorizontal: 16,
     alignItems: 'center',

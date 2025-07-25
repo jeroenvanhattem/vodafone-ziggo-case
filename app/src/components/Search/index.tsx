@@ -1,7 +1,7 @@
 import { useTheme } from '@/providers/theme';
 import { type ColorsType } from '@/providers/theme/colors';
 import { useRef } from 'react';
-import { Pressable, TextInput, View } from 'react-native';
+import { Pressable, StyleSheet, TextInput, View } from 'react-native';
 import { X } from 'react-native-feather';
 
 interface Props {
@@ -30,35 +30,36 @@ export const Search = ({ onSearch }: Props) => {
         ref={inputRef}
         style={styles.input}
         placeholder="Search quotes..."
-        placeholderTextColor={colors[600]}
+        placeholderTextColor={colors[400]}
         onChangeText={onChange}
         autoCapitalize="sentences"
         autoFocus
       />
 
       <Pressable style={styles.clear} onPress={onClear}>
-        <X color={colors[600]} />
+        <X color={colors[400]} />
       </Pressable>
     </View>
   );
 };
 
-const makeStyles = (colors: ColorsType) => ({
-  container: {
-    flexDirection: 'row',
-    backgroundColor: colors[900],
-    borderColor: colors[600],
-    borderWidth: 1,
-    borderRadius: 8,
-    paddingHorizontal: 12,
-    paddingVertical: 8,
-  },
-  input: {
-    flex: 1,
-    color: colors[100],
-    fontSize: 16,
-  },
-  clear: {
-    padding: 8,
-  },
-});
+const makeStyles = (colors: ColorsType) =>
+  StyleSheet.create({
+    container: {
+      flexDirection: 'row',
+      backgroundColor: colors[900],
+      borderColor: colors[400],
+      borderWidth: 1,
+      borderRadius: 8,
+      paddingHorizontal: 12,
+      paddingVertical: 8,
+    },
+    input: {
+      flex: 1,
+      color: colors[100],
+      fontSize: 16,
+    },
+    clear: {
+      padding: 8,
+    },
+  });

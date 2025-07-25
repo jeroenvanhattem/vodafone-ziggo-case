@@ -1,7 +1,11 @@
+import { useTheme } from '@/providers/theme';
+import { ColorsType } from '@/providers/theme/colors';
 import React, { useRef, useEffect } from 'react';
 import { View, Animated, StyleSheet } from 'react-native';
 
 export const Loading = () => {
+  const { colors } = useTheme();
+  const styles = makeStyles(colors);
   const animation = useRef(new Animated.Value(0)).current;
 
   useEffect(() => {
@@ -38,18 +42,19 @@ export const Loading = () => {
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-    height: '100%',
-  },
-  dot: {
-    width: 10,
-    height: 10,
-    borderRadius: 5,
-    backgroundColor: '#000',
-    marginHorizontal: 5,
-  },
-});
+const makeStyles = (colors: ColorsType) =>
+  StyleSheet.create({
+    container: {
+      flexDirection: 'row',
+      justifyContent: 'center',
+      alignItems: 'center',
+      height: '100%',
+    },
+    dot: {
+      width: 10,
+      height: 10,
+      borderRadius: 5,
+      backgroundColor: colors[100],
+      marginHorizontal: 5,
+    },
+  });

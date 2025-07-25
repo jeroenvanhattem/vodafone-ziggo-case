@@ -1,0 +1,13 @@
+export const MockQuote = {
+  id: 64391,
+  dialogue: false,
+  private: false,
+  tags: [],
+  url: 'https://favqs.com/quotes/adina/64391-this-is-my-qu-',
+  favorites_count: 2,
+  upvotes_count: 1,
+  downvotes_count: 0,
+  author: 'Adina',
+  author_permalink: 'adina',
+  body: 'This is my quote for performance testing',
+};

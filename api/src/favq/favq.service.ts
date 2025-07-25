@@ -10,6 +10,25 @@ export class FavqService {
     private readonly favoritesService: FavoritesService,
   ) {}
 
+  async getQuotes(page: number) {
+    const { data } = await firstValueFrom(
+      this.http.get(`/quotes?page=${page}`),
+    );
+
+    if (!data || !data.quotes) {
+      throw new Error('No quotes found');
+    }
+
+    const quotes = await Promise.all(
+      data.quotes.map(async (quote: { id: number }) => {
+        const liked = await this.favoritesService.findQuoteById(quote.id);
+        return { ...quote, isFavorite: !!liked, internalId: liked?.id };
+      }),
+    );
+
+    return quotes;
+  }
+
   async getQuote(id: number) {
     const { data } = await firstValueFrom(this.http.get(`/quotes/${id}`));
 

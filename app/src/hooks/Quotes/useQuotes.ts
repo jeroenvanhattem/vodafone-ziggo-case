@@ -1,12 +1,23 @@
 import { apiFetch } from '@/utils';
-import { useQuery } from '@tanstack/react-query';
+import { useInfiniteQuery } from '@tanstack/react-query';
 
-export const useQuotes = () => {
-  return useQuery({
-    queryKey: ['quotes'],
+interface Props {
+  page?: number;
+}
+
+export const useQuotes = ({ page }: Props) => {
+  return useInfiniteQuery({
+    queryKey: ['quotes', { page }],
     queryFn: async () => {
-      const response = await apiFetch('/quotes/random');
+      const response = await apiFetch(`/quotes?page=${page}`);
       return response;
     },
+    getNextPageParam: (lastPage, allPages) => {
+      const nextPage = allPages.length + 1;
+      return (lastPage as { length: number })?.length > 0
+        ? nextPage
+        : undefined;
+    },
+    initialPageParam: page || 1,
   });
 };

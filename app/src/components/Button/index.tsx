@@ -1,11 +1,11 @@
 import { useTheme } from '@/providers/theme';
 import { COLORS, type ColorsType } from '@/providers/theme/colors';
 import { ReactNode } from 'react';
-import { Pressable } from 'react-native';
+import { Pressable, StyleSheet } from 'react-native';
 import { Typography } from '../Typography';
 
 interface Props {
-  variant?: 'normal' | 'inverted' | 'primary';
+  variant?: 'normal' | 'inverted';
   children: ReactNode;
   onPress: () => void;
 }
@@ -15,13 +15,13 @@ export const Button = ({ variant = 'normal', children, onPress }: Props) => {
   const styles = makeStyles(colors);
 
   const textColor = {
-    normal: colors[900],
+    normal: colors[100],
     inverted: colors[100],
     primary: COLORS.default.white,
   };
 
   return (
-    <Pressable onPress={onPress} style={styles[variant]}>
+    <Pressable onPress={onPress} style={[styles.button, styles[variant]]}>
       <Typography variant="body" color={textColor[variant]}>
         {children}
       </Typography>
@@ -29,21 +29,22 @@ export const Button = ({ variant = 'normal', children, onPress }: Props) => {
   );
 };
 
-const makeStyles = (colors: ColorsType) => ({
-  normal: {
-    backgroundColor: colors[50],
-    padding: 16,
-    borderRadius: 8,
-  },
-  inverted: {
-    borderColor: colors[200],
-    borderWidth: 1,
-    padding: 16,
-    borderRadius: 8,
-  },
-  primary: {
-    backgroundColor: COLORS.accent[900],
-    padding: 16,
-    borderRadius: 8,
-  },
-});
+const makeStyles = (colors: ColorsType) =>
+  StyleSheet.create({
+    button: {
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      borderRadius: 8,
+      marginVertical: 8,
+      padding: 16,
+      borderWidth: 1,
+    },
+    normal: {
+      backgroundColor: colors[800],
+      borderColor: colors[400],
+    },
+    inverted: {
+      borderColor: colors[200],
+    },
+  });

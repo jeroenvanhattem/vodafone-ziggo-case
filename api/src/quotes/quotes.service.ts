@@ -6,6 +6,10 @@ import { FavqService } from 'src/favq/favq.service';
 export class QuotesService {
   constructor(private readonly favqService: FavqService) {}
 
+  getQuotes(page: number) {
+    return this.favqService.getQuotes(page);
+  }
+
   searchQuote(query: string) {
     return this.favqService.searchQuote(query);
   }
